@@ -12,34 +12,49 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous">
         </script>
+        <style>
+            img {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                /* width: 50%; */
+                max-height: 200px
+            }
+        </style>
         <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
         <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
         <!-- End Javascript -->
     </head>
     <body>
-            <div class="container">
-                <div class="form-group" id="state">
-                    <label for="state-data">State (Detik)</label>
-                    <input id="state-data" class="form-control" name="state-name" type="text" placeholder="Nilai State">
-                </div>
-                <div id="msg"></div>
-                <button id="start-button" type="button" class="btn btn-success">Mulai</button>
-
-                <div id="print-table" style="margin-top: 28px">
-                    <table id="table-lantai" class="table table-bordered">
-                        <tr>
-                            <th id="status-lampu-info">Status Lampu </th>
-                            <th id="status-cahaya-info">Status Cahaya </th>
-                            <th>Aksi</th>
-                        </tr>
-                        <tr style="height:100px">
-                            <td id="colum-status-lampu" ></td>
-                            <td id="colum-status-cahaya" ></td>
-                            <td> <button id="aksi-cahaya-hilang" type="button" class="btn btn-danger">Cahaya Hilang</button> <button id="aksi-cahaya-muncul" type="button" class="btn btn-info">Cahaya Muncul</button></td>
-                        </tr>
-                    </table>
-                </div>
+        <div class="container">
+            <div class="d-flex justify-content-center">
+                <h4>Tugas 1 Artificial Intelegent - Agent with State - Kelas B</h4><br>    
             </div>
+            <div class="d-flex justify-content-center">
+                <h6>Oleh : Danur Wijayanto - 18/433769/PPA/05584</h6>
+            </div>
+            <div class="form-group" id="state" style="margin-top: 30px">
+                <label for="state-data">State (Detik)</label>
+                <input id="state-data" class="form-control" name="state-name" type="text" placeholder="Nilai State">
+            </div>
+            <div id="msg"></div>
+            <button id="start-button" type="button" class="btn btn-success">Mulai</button>
+
+            <div id="print-table" style="margin-top: 28px">
+                <table id="table-lantai" class="table table-bordered">
+                    <tr>
+                        <th id="status-lampu-info">Status Lampu </th>
+                        <th id="status-cahaya-info">Status Cahaya </th>
+                        <th>Aksi</th>
+                    </tr>
+                    <tr style="height:200px">
+                        <td id="colum-status-lampu" ></td>
+                        <td id="colum-status-cahaya" ></td>
+                        <td> <button id="aksi-cahaya-hilang" type="button" class="btn btn-danger">Cahaya Hilang</button> <button id="aksi-cahaya-muncul" type="button" class="btn btn-info">Cahaya Muncul</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </body>
     <footer>
         <script src="http://tugas1-ai-n.oo/assets/js/app.js"></script>

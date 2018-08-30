@@ -19,22 +19,21 @@ $( "#start-button" ).click(function() {
     }else{
         appendHiddenStateData(stateData);
         removeStatusLampu();
-        appendStatusLampu("Hidup", "Gelap", "#e9ed00", "#000000", 1);
+        removeStatusCahaya();
+        appendStatusLampu("Hidup", "Gelap", "../assets/img/lampuon.png", "../assets/img/dark.jpeg", 1);
         $("#aksi-cahaya-hilang ").show();
     }
 });
 
 $( "#aksi-cahaya-hilang" ).click(function() {
-    removeStatusLampu();
-    appendStatusLampu("Mati", "Terang", "#ffffff", "#f4e9be", 0);
+    appendStatusLampu("Mati", "Terang", "../assets/img/lampuoff.png", "../assets/img/bright.jpg", 0);
     $("#aksi-cahaya-muncul ").show();
     $("#aksi-cahaya-hilang ").hide();
    
 });
 
 $( "#aksi-cahaya-muncul" ).click(function() {
-    removeStatusLampu();
-    appendStatusLampu("Hidup", "Gelap", "#e9ed00", "#000000", 0);
+    appendStatusLampu("Hidup", "Gelap", "../assets/img/lampuon.png", "../assets/img/dark.jpeg", 0);
     $("#aksi-cahaya-hilang ").show();
     $("#aksi-cahaya-muncul ").hide();
 });
@@ -50,23 +49,36 @@ function appendHiddenStateData(data){
     $("#state ").append("<input id='hiddenStateData' type='hidden' value="+data+">");
     stateData = data;
     backupStateData = data;
-
 }
 
 function removeStatusLampu(){
     $("#status-lampu-info-child ").remove();
+}
+
+function removeStatusCahaya(){
     $("#status-cahaya-info-child ").remove();
 }
 
 function appendStatusLampu(statusLampu, statusCahaya, warnaStatusLampu, warnaStatusCahaya, inisialisasi){
-    
-    if (inisialisasi == 1){
-        $("#status-lampu-info ").append("<span id='status-lampu-info-child' data-statuslampu="+statusLampu+">( "+statusLampu+" )</span>");
-        $("#colum-status-lampu ").attr("bgcolor", warnaStatusLampu);
-    }
-    $("#status-cahaya-info ").append("<span id='status-cahaya-info-child' data-statuscahaya="+statusCahaya+"> ( "+statusCahaya+" )</span>");
-    $("#colum-status-cahaya ").attr("bgcolor", warnaStatusCahaya);
 
+    if (inisialisasi == 1){
+        $("#colum-status-lampu img").remove()
+        $("#colum-status-cahaya img").remove()
+        $("#status-lampu-info ").append("<span id='status-lampu-info-child' data-statuslampu="+statusLampu+">( "+statusLampu+" )</span>");
+        $("#colum-status-lampu ").append("<img src="+warnaStatusLampu+" alt='Lampu Hidup'>");
+    }
+
+    // Ganti Status Cahaya
+    $("#status-cahaya-info-child ").remove();
+    $("#colum-status-cahaya img").remove()
+    $("#status-cahaya-info ").append("<span id='status-cahaya-info-child' data-statuscahaya="+statusCahaya+"> ( "+statusCahaya+" )</span>");
+    $("#colum-status-cahaya ").append("<img src="+warnaStatusCahaya+" alt='Lampu Hidup'>");
+    // End ganti status cahaya
+
+    agenDenganState(inisialisasi, statusLampu, warnaStatusLampu);
+}
+
+function agenDenganState(inisialisasi, statusLampu, warnaStatusLampu){
     if (inisialisasi != 1){
         if (!interval){
             interval = setInterval(function() {
@@ -75,9 +87,9 @@ function appendStatusLampu(statusLampu, statusCahaya, warnaStatusLampu, warnaSta
                 if (stateData == 0){
                     if (bypass == false){
                         var perceptCahaya = $( "#status-cahaya-info-child" ).data( "statuscahaya" );
-                        agentDenganState(statusLampu, warnaStatusLampu, inisialisasi, perceptCahaya);
+                        gantiStatusLampu(statusLampu, warnaStatusLampu, inisialisasi, perceptCahaya);
                     }else{
-                        agentDenganState(Cookies.get('statusLampu'), Cookies.get('warnaStatusLampu'), inisialisasi, Cookies.get('perceptCahaya'));
+                        gantiStatusLampu(Cookies.get('statusLampu'), Cookies.get('warnaStatusLampu'), inisialisasi, Cookies.get('perceptCahaya'));
                     }
                     clearInterval(interval); 
                     interval = null;
@@ -86,23 +98,27 @@ function appendStatusLampu(statusLampu, statusCahaya, warnaStatusLampu, warnaSta
             }, 1000);
         }else{
             setCookies(statusLampu, warnaStatusLampu);
-            console.log(backupStateData);
-
             bypass = true;
         }
     }
 }
-// Fungsi Agent dengan State
-function agentDenganState(statusLampu, warnaStatusLampu, inisialisasi, perceptCahaya){
 
+// Fungsi Agent dengan State
+function gantiStatusLampu(statusLampu, warnaStatusLampu, inisialisasi, perceptCahaya){
+    // Ganti Status Lampu
+    $("#colum-status-lampu img").remove()
+    $("#status-lampu-info-child").remove()
     if (perceptCahaya == "Terang"){
         $("#status-lampu-info ").append("<span id='status-lampu-info-child' data-statuslampu="+statusLampu+">( "+statusLampu+" )</span>");
-        $("#colum-status-lampu ").attr("bgcolor", warnaStatusLampu);
+        // $("#colum-status-lampu ").attr("bgcolor", warnaStatusLampu);
+        $("#colum-status-lampu ").append("<img src="+warnaStatusLampu+" alt='Lampu Mati'>");
     }else if(perceptCahaya == "Gelap" && inisialisasi != 1){
         $("#status-lampu-info ").append("<span id='status-lampu-info-child' data-statuslampu="+statusLampu+">( "+statusLampu+" )</span>");
-        $("#colum-status-lampu ").attr("bgcolor", warnaStatusLampu);
+        // $("#colum-status-lampu ").attr("bgcolor", warnaStatusLampu);
+        $("#colum-status-lampu ").append("<img src="+warnaStatusLampu+" alt='Lampu Hidup'>");
 
     }
+    // End Ganti Status Lampu
     
     
     // if (perceptCahaya == "Terang"){
